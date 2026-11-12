@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOOD-CODE - UNIVERSO AURORA</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="background-glow"></div>
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-brand"><div class="brand-symbol">✨</div>MOOD-CODE<small>UNIVERSO AURORA</small></div>
+    <div class="auth-heading"><h1>Hola, vuelve a <span>tu universo</span> 💜</h1><p>Entra con tu cuenta para ver a Lumi</p></div>
+    <div class="auth-tabs"><button id="tabLogin" class="active" type="button">Entrar</button><button id="tabRegister" type="button">Crear cuenta</button></div>
+    <form id="authForm">
+      <div class="form-group"><label>Tu correo</label><input id="login-email" type="email" placeholder="Tu correo" required></div>
+      <div class="form-group"><label>Tu contraseña</label><input id="login-pass" type="password" placeholder="Tu contraseña" required></div>
+      <div class="form-group hidden" id="confirmPasswordWrap"><label>Confirma contraseña</label><input id="login-pass2" type="password" placeholder="Repite tu contraseña"></div>
+      <button type="submit" class="btn-primary" id="btn-entrar">Entrar ✨</button>
+      <p class="auth-message" id="login-mensaje"></p>
+      <button type="button" class="forgot-password">¿Olvidaste tu contraseña?</button>
+    </form>
+    <div class="auth-footer">Tu espacio para enfocarte y moverte <span>✨ con Lumi</span></div>
+  </div>
+</div>
+
+<div id="appShell" class="app-shell hidden">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="brand-symbol">✨</div><div><strong>MOOD-CODE</strong><small>UNIVERSO AURORA</small></div></div>
+    <div class="sidebar-caption">MENÚ</div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="inicio"><span>🏠</span> Inicio</button>
+      <button class="nav-item" data-view="focus"><span>🎯</span> Concentración</button>
+      <button class="nav-item" data-view="movimiento"><span>🎵</span> Movimiento</button>
+      <button class="nav-item" data-view="habitos"><span>✅</span> Hábitos</button>
+      <button class="nav-item" data-view="jardin"><span>🌱</span> Jardín</button>
+      <button class="nav-item" data-view="chispa"><span>🐈‍⬛</span> Lumi</button>
+      <div class="nav-label">BIENESTAR</div>
+      <button class="nav-item" data-view="moodlight"><span>🌙</span> Mood-Light</button>
+      <button class="nav-item" data-view="animo"><span>💜</span> Ánimo</button>
+      <button class="nav-item" data-view="diario"><span>📓</span> Diario</button>
+      <button class="nav-item" data-view="relajacion"><span>🎧</span> Relajación</button>
+      <button class="nav-item" data-view="progreso"><span>📊</span> Progreso</button>
+      <button class="nav-item" data-view="perfil"><span>👤</span> Perfil</button>
+    </nav>
+    <div class="sidebar-user"><div class="user-avatar" id="avatarLetra">B</div><div class="user-details"><strong id="nombre-usuario">Belenhr</strong><small id="correo-usuario"></small></div><button class="logout-btn" id="btn-salir">↩</button></div>
+  </aside>
+
+  <main class="main">
+    <div class="mobile-head"><div><strong>MOOD-CODE</strong><small>UNIVERSO AURORA</small></div><button class="icon-btn" id="btn-salir-movil">↩</button></div>
+    <div class="topbar"><div><p class="topbar-date" id="fecha-hoy"></p><h1>Hola, <span id="nombre-usuario-2">Belenhr</span> ✨</h1><p>Hoy es un buen día para avanzar poquito a poquito.</p></div><div class="topbar-right"><span class="streak-pill">🔥 <span id="racha">0</span> días</span><span class="account-email" id="correo-usuario-2"></span></div></div>
+
+    <section class="view active" id="view-inicio">
+      <div class="welcome-hero"><div class="hero-content"><span class="eyebrow">UNIVERSO AURORA</span><h2>Tu espacio para <span>enfocarte y moverte</span></h2><p>Lumi te acompaña. Elige una misión chiquita y empieza.</p><button class="btn-primary" data-view-btn="focus">Empezar a concentrarme 🎯</button></div><div class="hero-decoration"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><span class="hero-star">✦</span><span class="hero-moon">☾</span></div></div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-icon">⏱</span><div><small>Minutos de enfoque</small><strong id="stat-enfoque">0</strong></div></div>
+        <div class="stat-card"><span class="stat-icon">🐾</span><div><small>Minutos de movimiento</small><strong id="stat-movimiento">0</strong></div></div>
+        <div class="stat-card"><span class="stat-icon">✅</span><div><small>Hábitos hoy</small><strong id="stat-habitos">0</strong></div></div>
+        <div class="stat-card"><span class="stat-icon">🔥</span><div><small>Racha</small><strong id="rachaCard">0 días</strong></div></div>
+      </div>
+      <div class="quick-grid">
+        <button class="quick-card" data-view-btn="focus"><span>🎯</span><strong>Concentración</strong><small>Temporizador suave para enfocarte</small><b>Empezar →</b></button>
+        <button class="quick-card" data-view-btn="movimiento"><span>🎵</span><strong>Movimiento</strong><small>Muévete poquito con música</small><b>Moverme →</b></button>
+        <button class="quick-card" data-view-btn="chispa"><span>🐈‍⬛</span><strong>Ver a Lumi</strong><small>Tu gatito cósmico te espera</small><b>Ir con Lumi →</b></button>
+      </div>
+      <div class="panel"><h3>Actividad reciente</h3><div class="activity-list"><div class="activity-item"><span>✨</span><div>Bienvenida a tu universo<small>Hoy</small></div></div></div></div>
+    </section>
+
+    <section class="view" id="view-focus"><div class="view-intro"><h2>Concentración 🎯</h2><p>Elige tu tiempo y enfócate con Lumi.</p></div><div class="panel timer-card"><div class="timer-modes"><button class="mode-btn active" data-min="25">25 min</button><button class="mode-btn" data-min="15">15 min</button><button class="mode-btn" data-min="5">5 min</button></div><div class="timer-ring"><div class="timer-center"><span>ENFOQUE</span><strong id="timerText">25:00</strong><small id="timerEstado">Listo para empezar</small></div></div><div class="timer-actions"><button class="btn-primary" id="btnTimer">▶ Empezar</button><button class="btn-secondary" id="btnTimerReset">↺ Reiniciar</button></div><p class="timer-note">¿En qué te vas a enfocar? <input id="focusTask" placeholder="Ej: tarea de mate" style="margin-top:8px;"></p></div></section>
+
+    <section class="view" id="view-movimiento"><div class="view-intro"><h2>Movimiento 🎵</h2><p>Muévete poquito a poquito.</p></div><div class="panel"><div class="duration-options"><button class="duration-btn active" data-mov="5">5 min</button><button class="duration-btn" data-mov="10">10 min</button><button class="duration-btn" data-mov="15">15 min</button></div><div class="movement-clock"><span>MOVIMIENTO</span><strong id="movText">05:00</strong></div><div class="movement-actions"><button class="btn-primary" id="btnMov">▶ Empezar movimiento</button></div><p class="movement-status" id="movStatus">Elige una rutina y dale play 💃</p></div><div class="panel"><h3>Tu rutina paso a paso ✨</h3><p class="muted" style="font-size:12px;">Elige una rutina y sigue cada paso con su propio tiempo. El tiempo total es el que elegiste arriba: 5, 10 o 15 min.</p>
+<div class="tips-grid" id="rutinaOpciones">
+<button class="tip-card rutina-card active" data-rutina="estiramiento" type="button"><span>🧘</span><strong>Estiramiento</strong><p>Cuello, espalda y brazos</p></button>
+<button class="tip-card rutina-card" data-rutina="baile" type="button"><span>💃</span><strong>Baile</strong><p>1 canción que te guste</p></button>
+<button class="tip-card rutina-card" data-rutina="yoga" type="button"><span>🧎</span><strong>Yoga suave</strong><p>Respira y estira</p></button>
+</div>
+<div class="paso-panel" id="pasoPanel">
+<div class="paso-num" id="pasoNum">Paso 1 de 5</div>
+<h3 id="pasoNombre">Cuello suave</h3>
+<p id="pasoInstruccion">Mueve el cuello despacio, de lado a lado, sin forzar.</p>
+<div class="paso-tiempo" id="pasoTiempo">01:00</div>
+<div class="progress-track"><div class="progress-fill" id="pasoBarra" style="width:0%"></div></div>
+<div class="timer-actions" style="margin-top:14px;"><button class="btn-primary" id="btnRutina">▶ Empezar rutina</button><button class="btn-secondary" id="btnPasoSiguiente">Siguiente paso →</button></div>
+<p class="movement-status" id="rutinaMsg">Al terminar, Lumi gana +10 XP y +10% de energía. 🩷</p>
+</div></div></section>
+
+    <section class="view" id="view-habitos"><div class="view-intro"><h2>Hábitos ✅</h2><p>Pequeños pasos todos los días.</p></div><div class="panel"><div class="habit-form"><input id="habitInput" placeholder="Escribe un hábito nuevo..."><button class="btn-primary" id="btnAddHabito">+ Agregar</button></div><div class="habit-list" id="habitList"><label class="habit-item"><span><h3>Tomar agua 💧</h3><p>Hoy</p></span><input type="checkbox" class="habit-check"></label><label class="habit-item"><span><h3>Moverme 5 min 🐾</h3><p>Hoy</p></span><input type="checkbox" class="habit-check"></label></div></div></section>
+
+    <section class="view" id="view-jardin"><div class="view-intro"><h2>Jardín Mágico 🌱</h2><p>Tu jardín crece con tus hábitos.</p></div><div class="panel garden-hero" style="display:block;"><div class="garden-level"><h3 id="jardinNivel">Nivel 1 🌸</h3><p id="jardinMsg">Lumi vive en tu jardín. Riega tus hábitos y haz florecer tus plantitas.</p><div class="garden-chips"><span>Pétalos 🩷 <b id="jardinPetalos">0</b></span><span>Flores 🌸 <b id="jardinFlores">0</b> / 4</span><span>XP Lumi ✨ <b id="jardinXp">0</b> / 40</span></div><div style="max-width:300px;margin-top:10px;"><div class="progress-track"><div class="progress-fill" id="jardinBarra" style="width:0%;"></div></div></div></div><div class="garden-lumi"><div class="pet-dragon-wrap" id="lumiJardinWrap" role="button" tabindex="0" aria-label="Lumi en el jardín"><div class="lumi-cat"><div class="lumi-tail"></div><div class="lumi-body"><div class="lumi-belly"></div></div><div class="lumi-back-leg"></div><div class="lumi-front-paw paw-left"></div><div class="lumi-front-paw paw-right"></div><div class="lumi-head"><span class="lumi-ear ear-left"></span><span class="lumi-ear ear-right"></span><span class="lumi-ear-inner inner-left"></span><span class="lumi-ear-inner inner-right"></span><span class="lumi-moon">☾</span><span class="lumi-eye eye-left"><i></i></span><span class="lumi-eye eye-right"><i></i></span><span class="lumi-blush blush-left"></span><span class="lumi-blush blush-right"></span><span class="lumi-muzzle"></span><span class="lumi-nose"></span><span class="lumi-mouth"></span><span class="lumi-whiskers whisk-left"></span><span class="lumi-whiskers whisk-right"></span></div><div class="lumi-collar"><span>★</span></div><span class="lumi-star star-one">✦</span><span class="lumi-star star-two">✧</span></div></div></div><p class="muted" style="text-align:center;font-size:12px;">Toca a Lumi en el jardín, también te saluda. 🩷</p><div class="garden-plants" id="gardenPlants"></div><p class="muted" style="text-align:center;font-size:12px;margin-top:12px;">Cada plantita necesita 3 riegos para florecer. Al florecer ganas 10 pétalos 🩷 y Lumi gana +10 XP y +10% de felicidad.</p><p class="muted" style="text-align:center;font-size:12px;" id="gardenColeccion">Tu colección: aún no ha florecido ninguna flor.</p></div></section>
+
+    <section class="view" id="view-chispa">
+      <div class="view-intro"><h2>Lumi <span aria-hidden="true">🐈‍⬛</span></h2><p>Tu gatito cósmico en su casita mágica, acompañado por la luz de Mood-Light.</p></div>
+      <div class="panel pet-home-panel">
+        <div class="pet-home-scene lumi-scene">
+          <div class="pet-home-stars"></div>
+          <div class="pet-house">
+            <div class="house-roof"></div>
+            <div class="house-sign">CASA DE LUMI ✦</div>
+            <div class="house-inside">
+              <div class="inside-wall"></div><div class="inside-window"></div><div class="inside-lamp"></div><div class="inside-rug"></div>
+              <div class="chispa-bed"><div class="bed-pillow"></div><div class="bed-blanket"></div></div>
+            </div>
+            <div class="house-door"></div><div class="house-plant">🪴</div>
+          </div>
+
+          <div class="lumi-lamp" aria-hidden="true"><span></span></div>
+          <div class="pet-dragon-wrap lumi-wrap" id="chispaWrap" role="button" tabindex="0" aria-label="Toca a Lumi para saludarlo">
+            <div class="lumi-cat">
+              <div class="lumi-tail"></div>
+              <div class="lumi-body"><div class="lumi-belly"></div></div>
+              <div class="lumi-back-leg"></div>
+              <div class="lumi-front-paw paw-left"></div><div class="lumi-front-paw paw-right"></div>
+              <div class="lumi-head">
+                <span class="lumi-ear ear-left"></span><span class="lumi-ear ear-right"></span>
+                <span class="lumi-ear-inner inner-left"></span><span class="lumi-ear-inner inner-right"></span>
+                <span class="lumi-moon">☾</span>
+                <span class="lumi-eye eye-left"><i></i></span><span class="lumi-eye eye-right"><i></i></span>
+                <span class="lumi-blush blush-left"></span><span class="lumi-blush blush-right"></span>
+                <span class="lumi-muzzle"></span><span class="lumi-nose"></span><span class="lumi-mouth"></span>
+                <span class="lumi-whiskers whisk-left"></span><span class="lumi-whiskers whisk-right"></span>
+              </div>
+              <div class="lumi-collar"><span>★</span></div>
+              <span class="lumi-star star-one">✦</span><span class="lumi-star star-two">✧</span>
+            </div>
+          </div>
+
+          <span class="chispa-bubble" id="chispaBubble">¡Hola! Tócame 💜</span>
+          <span class="chispa-hearts">✦ 💜</span>
+          <div class="pet-home-status">LUMI ESTÁ DESPIERTO ✨</div>
+          <div class="pet-home-ground"></div>
+        </div>
+
+        <div class="pet-info">
+          <h3>Lumi <span class="pet-stage-label">• Gatito Cósmico</span></h3>
+          <p>Toca a Lumi para saludarlo. ¡También puedes darle una manzana!</p>
+          <div class="pet-stats-row">
+            <div><small>Energía</small><strong id="lumiEnergia">80%</strong></div>
+            <div><small>Felicidad</small><strong id="lumiFelicidad">90%</strong></div>
+            <div><small>Nivel</small><strong id="lumiNivel">1</strong></div>
+          </div>
+          <div class="evolution-bar"><div id="lumiXpBar" style="width:30%"></div></div>
+          <button class="btn-primary" id="btnAlimentar">🍎 Alimentar a Lumi</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-moodlight"><div class="view-intro"><h2>Mood-Light 🌙</h2><p>Tu luz suave para calmarte.</p></div><div class="panel mood-light-panel"><div class="mood-light-preview"><div class="mood-light-bulb"></div></div><div class="mood-light-controls"><label>Brillo</label><input type="range" min="0" max="100" value="70"><div class="light-modes"><button class="light-mode active">Calma</button><button class="light-mode">Enfoque</button><button class="light-mode">Dormir</button><button class="light-mode">Energía</button></div><label style="margin-top:12px;">Tu color</label><input type="color" id="lampColor" value="#f78fb8" style="height:42px;padding:4px;"><p class="light-disclaimer">💡 El color también se manda a tu lámpara real si está conectada.</p></div></div><div class="panel"><h3>Conectar tu lámpara real 💡</h3><p class="muted" style="font-size:12px;">Tu ESP32 y tu compu tienen que estar en el mismo WiFi.</p><div class="habit-form"><input id="lampIp" placeholder="IP de tu lámpara, ej: 192.168.1.50"><button class="btn-primary" id="btnConectarLampara" type="button">Conectar</button></div><p class="muted" id="lampStatus" style="font-size:12px;">Lámpara no conectada todavía.</p><div class="timer-actions"><button class="btn-secondary" id="btnProbarLampara" type="button">✨ Probar color rosa</button><button class="btn-secondary" id="btnApagarLampara" type="button">Apagar lámpara</button></div><p class="muted" style="font-size:11px;margin-top:10px;">La IP te la da el ESP32 en el Monitor Serial cuando lo enciendes. El código del ESP32 viene en el archivo <b>mood-light-esp32.ino</b> de esta carpeta.</p></div></section>
+
+    <section class="view" id="view-animo"><div class="view-intro"><h2>¿Cómo te sientes hoy? 💜</h2><p class="muted">Toca la emoción que sientes y luego guarda tu ánimo. Altas = mucha energía · Bajas = poca energía.</p></div><div class="panel"><div class="tabla-emociones"><div class="col-emociones col-altas"><h3>EMOCIONES ALTAS</h3><p class="muted">mucha energía</p><div class="moods moods-tabla"><button class="mood-btn"><span>😊</span><strong>Alegría</strong><small>ganas de reír y celebrar</small></button><button class="mood-btn"><span>🤩</span><strong>Euforia</strong><small>emoción muy fuerte, ¡wow!</small></button><button class="mood-btn"><span>😄</span><strong>Entusiasmo</strong><small>ganas de hacer cosas</small></button><button class="mood-btn"><span>😍</span><strong>Amor</strong><small>cariño fuerte por alguien</small></button><button class="mood-btn"><span>😎</span><strong>Orgullo</strong><small>sentirte bien por lograr algo</small></button><button class="mood-btn"><span>😲</span><strong>Sorpresa</strong><small>¡no te lo esperabas!</small></button><button class="mood-btn"><span>😡</span><strong>Enojo</strong><small>tensión y ganas de gritar</small></button><button class="mood-btn"><span>😨</span><strong>Miedo</strong><small>alerta, corazón rápido</small></button><button class="mood-btn"><span>😟</span><strong>Ansiedad</strong><small>nervios por lo que viene</small></button><button class="mood-btn"><span>😖</span><strong>Estrés</strong><small>presión y prisa</small></button><button class="mood-btn"><span>😳</span><strong>Vergüenza</strong><small>querer esconderte</small></button><button class="mood-btn"><span>😒</span><strong>Envidia</strong><small>querer lo que tiene otro</small></button></div></div><div class="col-emociones col-bajas"><h3>EMOCIONES BAJAS</h3><p class="muted">poca energía</p><div class="moods moods-tabla"><button class="mood-btn"><span>😢</span><strong>Tristeza</strong><small>ganas de llorar, sin ánimo</small></button><button class="mood-btn"><span>😌</span><strong>Calma</strong><small>paz, respiración lenta</small></button><button class="mood-btn"><span>😴</span><strong>Cansancio</strong><small>sueño, cuerpo pesado</small></button><button class="mood-btn"><span>😐</span><strong>Aburrimiento</strong><small>nada te llama la atención</small></button><button class="mood-btn"><span>😔</span><strong>Melancolía</strong><small>extrañar algo o a alguien</small></button><button class="mood-btn"><span>🧘</span><strong>Relax</strong><small>tranquila y suelta</small></button><button class="mood-btn"><span>😞</span><strong>Culpa</strong><small>sentir que hiciste algo mal</small></button><button class="mood-btn"><span>😶</span><strong>Soledad</strong><small>sentirte sola, sin compañía</small></button><button class="mood-btn"><span>🌿</span><strong>Paz</strong><small>todo tranquilo por dentro</small></button><button class="mood-btn"><span>🥰</span><strong>Ternura</strong><small>cariño suave y dulce</small></button><button class="mood-btn"><span>🙏</span><strong>Gratitud</strong><small>agradecer lo que tienes</small></button><button class="mood-btn"><span>😮‍💨</span><strong>Desánimo</strong><small>sin ganas de nada</small></button></div></div></div><div class="ayuda-emociones"><h3>¿Qué ayuda?</h3><p><b>Altas:</b> respira hondo, muévete, escribe lo que sientes.</p><p><b>Bajas:</b> descansa, toma agua, habla con alguien, sal al sol.</p><p class="muted">Las altas no siempre son buenas y las bajas no siempre son malas. Lo importante es notarlas. Lumi te acompaña en todas. 🩷</p></div><button class="btn-primary" id="btnGuardarAnimo">Guardar ánimo</button><p class="muted" id="animoMsg" style="margin-top:10px;"></p><div class="resumen-animo"><h3>Tu resumen · Lumi te lo manda 💌</h3><p class="muted">Al final de la semana y al final del mes, Lumi te manda un resumen de cómo te sentiste. Aquí también lo puedes ver cuando quieras.</p><div class="timer-actions"><button class="btn-secondary" id="btnResumenSemana" type="button">Resumen de la semana</button><button class="btn-secondary" id="btnResumenMes" type="button">Resumen del mes</button></div><div id="resumenAnimoCard" class="card-resumen hidden"><h3 id="resumenAnimoTitulo"></h3><p id="resumenAnimoTexto"></p><div>Emociones altas: <b id="pctAltasAnimo"></b></div><div class="barra-resumen"><i id="barAltasAnimo"></i></div><div>Emociones bajas: <b id="pctBajasAnimo"></b></div><div class="barra-resumen"><i id="barBajasAnimo" style="background:#b9aee0"></i></div><table id="tablaTopAnimo" class="tabla-resumen"></table></div><div id="mensajeLumiResumen" class="mensaje-lumi hidden"></div><h4 style="margin-top:16px;">Últimos días</h4><table id="tablaDiasAnimo" class="tabla-resumen"></table></div></div></section>
+
+    <section class="view" id="view-diario"><div class="view-intro"><h2>Diario 📓</h2></div><div class="panel"><div class="form-group"><label>Escribe cómo te fue hoy</label><textarea id="journalText" rows="5" placeholder="Hoy me sentí..."></textarea></div><button class="btn-primary" id="btnDiario">Guardar en mi diario</button><div id="journalEntries"></div></div></section>
+
+    <section class="view" id="view-relajacion"><div class="view-intro"><h2>Relajación 🎧</h2></div><div class="panel breath-panel"><div class="breath-circle" id="breathCircle"><span>Respira</span></div><br><button class="btn-primary" id="btnRespirar">Empezar respiración</button></div></section>
+
+    <section class="view" id="view-progreso">
+      <div class="view-intro"><h2>Tu Progreso 📊</h2><p>Mira todo lo que ya lograste, poquito a poquito.</p></div>
+      <div class="panel"><div class="section-heading"><h3>Hoy • Anillos del día</h3><span id="anillosFecha"></span></div><div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:15px;text-align:center;"><div><div class="anillo" id="anilloEnfoque" style="--p:0;--c:#f78fb8"><span><b id="anilloEnfoqueNum">0</b><small>min</small></span></div><p><b>Enfoque</b><br><small class="muted">Meta 50 min</small></p></div><div><div class="anillo" id="anilloMov" style="--p:0;--c:#a4e8c1"><span><b id="anilloMovNum">0</b><small>min</small></span></div><p><b>Movimiento</b><br><small class="muted">Meta 20 min</small></p></div><div><div class="anillo" id="anilloHabitos" style="--p:0;--c:#f3a9d1"><span><b id="anilloHabitosNum">0</b><small>/5</small></span></div><p><b>Hábitos</b><br><small class="muted">Meta 5</small></p></div></div><p class="muted" style="text-align:center;margin-top:12px;">Empiezas en 0 hoy. Cada sesión suma y tus gráficas se llenan solas. 💜</p></div>
+      <div class="panel"><div class="section-heading"><h3>Esta semana • Enfoque vs Movimiento</h3><span class="muted" style="font-size:11px;">🟣 Enfoque &nbsp; 🟢 Movimiento</span></div><div class="graf-barras" id="barrasSemana"></div></div>
+      <div class="panel"><div class="section-heading"><h3>¿Cómo me concentré?</h3><span class="muted" style="font-size:11px;">Minutos por día</span></div><svg viewBox="0 0 340 120" class="graf-linea" id="lineaEnfoque"></svg><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);padding:0 5px;"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div></div>
+      <div class="panel" style="background:radial-gradient(circle at 90% 10%,rgba(247,143,184,.12),transparent 40%),rgba(32,26,53,.86)"><div class="section-heading"><h3>✨ Moverme = Concentrarme</h3></div><p class="muted" style="font-size:12px;">Los días que te mueves, te concentras mejor.</p><svg viewBox="0 0 340 120" class="graf-linea" id="lineaDoble"></svg><div style="display:flex;gap:15px;font-size:11px;margin-top:10px;"><span>🟣 Enfoque</span><span>🟢 Movimiento</span><b id="movermePorcentaje" style="color:var(--mint);margin-left:auto;">0% · Aún no hay datos</b></div></div>
+      <div class="panel"><div class="section-heading"><h3>Tu racha • Mapa de calor</h3><span id="rachaProgreso">🔥 0 días</span></div><div class="heatmap" id="heatmap"></div><div style="display:flex;gap:6px;align-items:center;font-size:10px;color:var(--muted);margin-top:10px;">Menos <span style="width:12px;height:12px;background:rgba(255,255,255,.08);border-radius:3px;display:inline-block;"></span><span style="width:12px;height:12px;background:rgba(247,143,184,.3);border-radius:3px;display:inline-block;"></span><span style="width:12px;height:12px;background:rgba(247,143,184,.6);border-radius:3px;display:inline-block;"></span><span style="width:12px;height:12px;background:#f78fb8;border-radius:3px;display:inline-block;"></span> Más</div></div>
+      <div class="panel"><div class="section-heading"><h3>¿Qué trabajaste hoy? • Cuerpito</h3><button class="btn-secondary" style="padding:8px 12px;">Toca una parte</button></div><div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;"><div class="cuerpo-chispa"><div class="parte-cuerpo brazos">💪<span>Brazos</span></div><div class="parte-cuerpo pancita">✨<span>Pancita</span></div><div class="parte-cuerpo piernas">🦵<span>Piernas</span></div><div class="parte-cuerpo espalda">🌸<span>Espalda</span></div></div><div style="flex:1;min-width:180px;"><p><b>Toca una parte para marcarla</b></p><p class="muted" style="font-size:12px;">Si se pone verde, ya la trabajaste hoy.</p><div id="listaCuerpo" style="margin-top:10px;"></div></div></div></div>
+      <div class="panel"><div class="section-heading"><h3>Tu energía • Antes y después de moverte</h3></div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;"><div style="flex:1;text-align:center;"><small class="muted">ANTES</small><div style="font-size:28px;">😴</div><b>0 / 5</b></div><div style="font-size:24px;">→</div><div style="flex:1;text-align:center;"><small class="muted">DESPUÉS</small><div style="font-size:28px;" id="energiaDespues">😴</div><b id="energiaDespuesTxt" style="color:var(--mint);">0 / 5</b></div><div style="flex:1;min-width:140px;"><div class="progress-track"><div class="progress-fill" id="barraEnergia" style="width:0%;"></div></div><small class="muted" id="energiaNota">Aún no hay datos de hoy</small></div></div><div style="display:flex;gap:8px;margin-top:15px;justify-content:center;"><span>¿Cómo te sientes ahora?</span><button class="mood-btn" data-energia="1">😴</button><button class="mood-btn" data-energia="3">😐</button><button class="mood-btn" data-energia="5">😊</button></div></div>
+      <div class="panel"><div class="section-heading"><h3>¿Qué haces más? • Tu rueda</h3></div><div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;"><div class="rueda"></div><div style="flex:1;min-width:160px;font-size:12px;"><p>🧘 <b>Estiramiento</b> <span id="ruedaEstTxt">0%</span></p><div class="progress-track"><div class="progress-fill" id="ruedaEstBar" style="width:0%;background:#f78fb8;"></div></div><p style="margin-top:8px;">💃 <b>Baile</b> <span id="ruedaBaileTxt">0%</span></p><div class="progress-track"><div class="progress-fill" id="ruedaBaileBar" style="width:0%;background:#f3a9d1;"></div></div><p style="margin-top:8px;">🧎 <b>Yoga suave</b> <span id="ruedaYogaTxt">0%</span></p><div class="progress-track"><div class="progress-fill" id="ruedaYogaBar" style="width:0%;background:#a4e8c1;"></div></div></div></div></div>
+    </section>
+
+    <section class="view" id="view-perfil"><div class="view-intro"><h2>Perfil 👤</h2></div><div class="panel"><form class="profile-form"><div class="form-group"><label>Nombre</label><input id="perfilNombre" value="Belenhr"></div><div class="form-group"><label>Correo</label><input id="perfilCorreo" disabled></div><div class="form-group full-width"><label>Tu meta</label><input placeholder="Mi meta es..."></div><button class="btn-primary full-width">Guardar perfil</button></form></div></section>
+    <div class="footer">MOOD-CODE • UNIVERSO AURORA • Hecho con 💜 para ti</div>
+  </main>
+</div>
+
+<nav class="bottom-nav"><button class="active" data-view="inicio"><span>🏠</span>Inicio</button><button data-view="focus"><span>🎯</span>Enfoque</button><button data-view="chispa"><span>🐈‍⬛</span>Lumi</button><button data-view="animo"><span>💜</span>Ánimo</button><button id="btnMore"><span>⋯</span>Más</button></nav>
+<div class="more-sheet" id="moreSheet"><div class="sheet-head"><h3>Más</h3><button id="btnCloseMore">✕</button></div><div class="more-grid"><button data-view="movimiento"><span>🎵</span>Movimiento</button><button data-view="habitos"><span>✅</span>Hábitos</button><button data-view="jardin"><span>🌱</span>Jardín</button><button data-view="moodlight"><span>🌙</span>Mood-Light</button><button data-view="diario"><span>📓</span>Diario</button><button data-view="progreso"><span>📊</span>Progreso</button></div></div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="toast" id="toast">¡Bienvenida! ✨</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./script.js"></script>
+</body>
+</html>
