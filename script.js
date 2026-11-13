@@ -43,9 +43,7 @@ function mostrarApp(entrar) {
     const correo = usuarioActual?.email ||
       localStorage.getItem("mood_email") || "";
 
-    const nombre = correo
-      ? correo.split("@")[0]
-      : "Belenhr";
+    const nombre = nombreParaMostrar(correo);
 
     const correoUno = document.getElementById("correo-usuario");
     const correoDos = document.getElementById("correo-usuario-2");
@@ -61,8 +59,58 @@ function mostrarApp(entrar) {
     if (nombreDos) nombreDos.textContent = nombre;
     if (avatar) avatar.textContent = nombre.charAt(0).toUpperCase();
 
+    const perfilNombre = document.getElementById("perfilNombre");
+    const perfilMeta = document.getElementById("perfilMeta");
+    if (perfilNombre) perfilNombre.value = nombre;
+    if (perfilMeta) perfilMeta.value = leerMetaPerfil(correo);
+
     irAVista("inicio");
   }
+}
+
+/* 4b. NOMBRE DE PERFIL (V12): automático por correo y editable */
+
+function nombreParaMostrar(correo) {
+  if (!correo) return "Belenhr";
+  const guardado = localStorage.getItem("moodcode_nombre_" + correo);
+  if (guardado) return guardado;
+  const base = correo.split("@")[0].replace(/\d+$/, "");
+  return base.charAt(0).toUpperCase() + base.slice(1);
+}
+
+function leerMetaPerfil(correo) {
+  if (!correo) return "";
+  return localStorage.getItem("moodcode_meta_" + correo) || "";
+}
+
+function aplicarNombre(nombre) {
+  const nombreUno = document.getElementById("nombre-usuario");
+  const nombreDos = document.getElementById("nombre-usuario-2");
+  const avatar = document.getElementById("avatarLetra");
+  const perfilNombre = document.getElementById("perfilNombre");
+  if (nombreUno) nombreUno.textContent = nombre;
+  if (nombreDos) nombreDos.textContent = nombre;
+  if (avatar) avatar.textContent = nombre.charAt(0).toUpperCase();
+  if (perfilNombre) perfilNombre.value = nombre;
+}
+
+const perfilForm = document.getElementById("perfilForm");
+if (perfilForm) {
+  perfilForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const correo = usuarioActual?.email || localStorage.getItem("mood_email") || "";
+    const inputNombre = document.getElementById("perfilNombre");
+    const inputMeta = document.getElementById("perfilMeta");
+    const nuevoNombre = (inputNombre?.value || "").trim();
+    if (nuevoNombre) {
+      if (correo) localStorage.setItem("moodcode_nombre_" + correo, nuevoNombre);
+      aplicarNombre(nuevoNombre);
+    }
+    if (correo && inputMeta) {
+      localStorage.setItem("moodcode_meta_" + correo, inputMeta.value.trim());
+    }
+    mostrarToast("Perfil guardado 💜");
+  });
 }
 
 /* 5. PESTAÑAS DE ACCESO */
@@ -394,6 +442,8 @@ if (btnTimer) {
         }
         registrarDia({ enfoque: timerMin });
 
+        detenerMusica();
+
         mostrarToast("¡Terminaste tu sesión! 💜");
         if (tarea) tarea.value = "";
       }
@@ -410,8 +460,139 @@ if (btnTimerReset) {
     if (btnTimer) btnTimer.textContent = "▶ Empezar";
     if (timerEstado) timerEstado.textContent = "Listo para empezar";
 
+    detenerMusica();
+    document.querySelectorAll(".music-btn").forEach(b => b.classList.remove("active"));
+    const musicEstado = document.getElementById("musicEstado");
+    if (musicEstado) musicEstado.textContent = "Sin música";
+
     pintarTimer();
   };
+/* --- V12: Música relajante en Concentración (Web Audio, sin archivos) --- */
+
+let musicaCtx = null;
+let musicaMaster = null;
+let musicaNodos = [];
+let musicaTipo = "";
+let melodiaId = null;
+
+const ESCALA_SUAVE = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+
+function asegurarAudio() {
+  if (!musicaCtx) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    musicaCtx = new AudioCtx();
+    musicaMaster = musicaCtx.createGain();
+    const vol = document.getElementById("musicVol");
+    musicaMaster.gain.value = (vol ? Number(vol.value) : 50) / 100 * 0.6;
+    musicaMaster.connect(musicaCtx.destination);
+  }
+  if (musicaCtx.state === "suspended") musicaCtx.resume();
+  return musicaCtx;
+}
+
+function ruidoBlanco(ctx) {
+  const buffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+  const datos = buffer.getChannelData(0);
+  for (let i = 0; i < datos.length; i++) datos[i] = Math.random() * 2 - 1;
+  const fuente = ctx.createBufferSource();
+  fuente.buffer = buffer;
+  fuente.loop = true;
+  return fuente;
+}
+
+function notaSuave(ctx, freq, cuando, duracion) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = "sine";
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(0, cuando);
+  gain.gain.linearRampToValueAtTime(0.35, cuando + 0.4);
+  gain.gain.exponentialRampToValueAtTime(0.001, cuando + duracion);
+  osc.connect(gain);
+  gain.connect(musicaMaster);
+  osc.start(cuando);
+  osc.stop(cuando + duracion + 0.1);
+}
+
+function iniciarMusica(tipo) {
+  detenerMusica();
+  const estado = document.getElementById("musicEstado");
+  if (tipo === "off" || !tipo) {
+    musicaTipo = "";
+    if (estado) estado.textContent = "Sin música";
+    return;
+  }
+  const ctx = asegurarAudio();
+  musicaTipo = tipo;
+
+  if (tipo === "lluvia") {
+    const fuente = ruidoBlanco(ctx);
+    const filtro = ctx.createBiquadFilter();
+    filtro.type = "lowpass";
+    filtro.frequency.value = 900;
+    const gain = ctx.createGain();
+    gain.gain.value = 0.5;
+    fuente.connect(filtro);
+    filtro.connect(gain);
+    gain.connect(musicaMaster);
+    fuente.start();
+    musicaNodos.push(fuente);
+    if (estado) estado.textContent = "Sonando: Lluvia 🌧️";
+  } else if (tipo === "olas") {
+    const fuente = ruidoBlanco(ctx);
+    const filtro = ctx.createBiquadFilter();
+    filtro.type = "lowpass";
+    filtro.frequency.value = 500;
+    const gain = ctx.createGain();
+    gain.gain.value = 0.35;
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.08;
+    const lfoGain = ctx.createGain();
+    lfoGain.gain.value = 0.22;
+    lfo.connect(lfoGain);
+    lfoGain.connect(gain.gain);
+    fuente.connect(filtro);
+    filtro.connect(gain);
+    gain.connect(musicaMaster);
+    fuente.start();
+    lfo.start();
+    musicaNodos.push(fuente, lfo);
+    if (estado) estado.textContent = "Sonando: Olas 🌊";
+  } else if (tipo === "melodia") {
+    let indice = 2;
+    melodiaId = setInterval(() => {
+      indice = Math.max(0, Math.min(ESCALA_SUAVE.length - 1, indice + (Math.random() < 0.5 ? -1 : 1)));
+      notaSuave(musicaCtx, ESCALA_SUAVE[indice], musicaCtx.currentTime, 2.5);
+    }, 1800);
+    notaSuave(ctx, ESCALA_SUAVE[2], ctx.currentTime, 2.5);
+    if (estado) estado.textContent = "Sonando: Melodía suave 🎵";
+  }
+}
+
+function detenerMusica() {
+  if (melodiaId) { clearInterval(melodiaId); melodiaId = null; }
+  musicaNodos.forEach(nodo => {
+    try { nodo.stop(); } catch (e) {}
+    try { nodo.disconnect(); } catch (e) {}
+  });
+  musicaNodos = [];
+}
+
+document.querySelectorAll(".music-btn").forEach(boton => {
+  boton.onclick = () => {
+    document.querySelectorAll(".music-btn").forEach(b => b.classList.remove("active"));
+    boton.classList.add("active");
+    iniciarMusica(boton.dataset.musica);
+  };
+});
+
+const musicVol = document.getElementById("musicVol");
+if (musicVol) {
+  musicVol.oninput = () => {
+    if (musicaMaster) musicaMaster.gain.value = musicVol.value / 100 * 0.6;
+  };
+}
+
 }
 
 pintarTimer();

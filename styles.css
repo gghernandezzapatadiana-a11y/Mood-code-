@@ -836,3 +836,13 @@ input::placeholder, textarea::placeholder { color: #77708c; }
 .tabla-resumen td { padding: 6px 4px; border-bottom: 1px solid var(--border); }
 .tabla-resumen td:last-child { text-align: right; font-weight: 700; color: var(--pink); }
 .mensaje-lumi { border: 2px dashed var(--pink); border-radius: 16px; padding: 14px; margin-top: 14px; font-size: 13px; line-height: 1.55; background: rgba(247,184,208,.08); }
+
+/* --- V12: Música relajante en Concentración --- */
+.music-panel{margin-top:18px;padding:16px;border:1px solid rgba(247,184,208,.35);border-radius:16px;background:rgba(247,184,208,.07)}
+.music-panel h3{margin:0 0 4px;font-size:15px}
+.music-options{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.music-btn{padding:9px 12px;border-radius:999px;border:1px solid rgba(247,184,208,.5);background:transparent;color:inherit;font-size:13px;cursor:pointer}
+.music-btn.active{background:#f7b8d0;border-color:#f7b8d0;color:#2b1030;font-weight:700}
+.music-vol{display:flex;align-items:center;gap:10px;font-size:13px}
+.music-vol input{flex:1;accent-color:#e85a9a}
+.music-estado{margin:8px 0 0;font-size:12px;opacity:.85}
