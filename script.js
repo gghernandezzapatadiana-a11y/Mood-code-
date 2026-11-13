@@ -149,6 +149,19 @@ if (tabRegister) {
   };
 }
 
+/* 5b. MOSTRAR / OCULTAR CONTRASEÑA (V13) */
+
+document.querySelectorAll(".toggle-pass").forEach(boton => {
+  boton.addEventListener("click", () => {
+    const input = document.getElementById(boton.dataset.target);
+    if (!input) return;
+    const mostrar = input.type === "password";
+    input.type = mostrar ? "text" : "password";
+    boton.textContent = mostrar ? "🙈" : "👁️";
+    boton.setAttribute("aria-label", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
+  });
+});
+
 /* 6. INICIAR SESIÓN Y REGISTRO */
 
 if (authForm) {

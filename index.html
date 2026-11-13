@@ -16,8 +16,8 @@
     <div class="auth-tabs"><button id="tabLogin" class="active" type="button">Entrar</button><button id="tabRegister" type="button">Crear cuenta</button></div>
     <form id="authForm">
       <div class="form-group"><label>Tu correo</label><input id="login-email" type="email" placeholder="Tu correo" required></div>
-      <div class="form-group"><label>Tu contraseña</label><input id="login-pass" type="password" placeholder="Tu contraseña" required></div>
-      <div class="form-group hidden" id="confirmPasswordWrap"><label>Confirma contraseña</label><input id="login-pass2" type="password" placeholder="Repite tu contraseña"></div>
+      <div class="form-group"><label>Tu contraseña</label><input id="login-pass" type="password" placeholder="Tu contraseña" required><button type="button" class="toggle-pass" data-target="login-pass" aria-label="Mostrar contraseña">👁️</button></div>
+      <div class="form-group hidden" id="confirmPasswordWrap"><label>Confirma contraseña</label><input id="login-pass2" type="password" placeholder="Repite tu contraseña"><button type="button" class="toggle-pass" data-target="login-pass2" aria-label="Mostrar contraseña">👁️</button></div>
       <button type="submit" class="btn-primary" id="btn-entrar">Entrar ✨</button>
       <p class="auth-message" id="login-mensaje"></p>
       <button type="button" class="forgot-password">¿Olvidaste tu contraseña?</button>
@@ -172,7 +172,7 @@
 </div>
 
 <nav class="bottom-nav"><button class="active" data-view="inicio"><span>🏠</span>Inicio</button><button data-view="focus"><span>🎯</span>Enfoque</button><button data-view="chispa"><span>🐈‍⬛</span>Lumi</button><button data-view="animo"><span>💜</span>Ánimo</button><button id="btnMore"><span>⋯</span>Más</button></nav>
-<div class="more-sheet" id="moreSheet"><div class="sheet-head"><h3>Más</h3><button id="btnCloseMore">✕</button></div><div class="more-grid"><button data-view="movimiento"><span>🎵</span>Movimiento</button><button data-view="habitos"><span>✅</span>Hábitos</button><button data-view="jardin"><span>🌱</span>Jardín</button><button data-view="moodlight"><span>🌙</span>Mood-Light</button><button data-view="diario"><span>📓</span>Diario</button><button data-view="progreso"><span>📊</span>Progreso</button></div></div>
+<div class="more-sheet" id="moreSheet"><div class="sheet-head"><h3>Más</h3><button id="btnCloseMore">✕</button></div><div class="more-grid"><button data-view="movimiento"><span>🎵</span>Movimiento</button><button data-view="habitos"><span>✅</span>Hábitos</button><button data-view="jardin"><span>🌱</span>Jardín</button><button data-view="moodlight"><span>🌙</span>Mood-Light</button><button data-view="diario"><span>📓</span>Diario</button><button data-view="relajacion"><span>🎧</span>Relajación</button><button data-view="progreso"><span>📊</span>Progreso</button><button data-view="perfil"><span>👤</span>Perfil</button></div></div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <div class="toast" id="toast">¡Bienvenida! ✨</div>
 

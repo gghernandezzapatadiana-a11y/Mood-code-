@@ -846,3 +846,7 @@ input::placeholder, textarea::placeholder { color: #77708c; }
 .music-vol{display:flex;align-items:center;gap:10px;font-size:13px}
 .music-vol input{flex:1;accent-color:#e85a9a}
 .music-estado{margin:8px 0 0;font-size:12px;opacity:.85}
+
+/* --- V13: botón para ver la contraseña --- */
+.form-group { position: relative; }
+.toggle-pass { position: absolute; right: 10px; bottom: 9px; background: none; border: 0; font-size: 17px; cursor: pointer; padding: 2px 4px; line-height: 1; }
